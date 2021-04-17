@@ -20,10 +20,11 @@ mongoose.connection.once('open', ()=>{
 
 //import routes
 const usersRouter = require('./route/users');
+const tasksRouter = require('./route/tasks');
 
 //switch to routes
 app.use('/users', usersRouter);
-
+app.use('/tasks', tasksRouter);
 
 //start listen
 app.listen(port, () => {

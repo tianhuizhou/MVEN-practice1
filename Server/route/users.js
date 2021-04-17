@@ -43,9 +43,10 @@ router.route('/login').post(async (req, res)=>{
         })
         .catch(err => res.status(400).json('Error: ' +err))
     user.then( async user => {
+        console.log(user._id);
         try {
             if(await bcrypt.compare(req.body.password, user.password)){
-                res.status(200).send(user);
+                res.status(200).json(user);
             } else {
                 res.status(401).send("Password does not match");
             }
