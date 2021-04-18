@@ -32,24 +32,25 @@ export default {
     }
   },
   watch: {
-    tasks(newVal){
+    tasks(newVal, oldVal) {
 
+      console.log("I am watch tasks ....")
+      console.log(newVal.length, oldVal.length)
     }
   },
   methods: {
     dragItem(event, item) {
-      console.log(item)
       event.dataTransfer.dropEffect = 'move';
       event.dataTransfer.effectAllowed = 'move';
       event.dataTransfer.setData('itemID', item._id)
     },
     dropItem(event, list) {
-      console.log(`this is list param: ${list}`)
       const itemID = event.dataTransfer.getData('itemID')
-      console.log(`This is itemID: ${itemID}`)
       const item = this.tasks.find((item) => item._id == itemID)
-      console.log(`this is item: ${item}`)
-      item.status = list
+      if (item.status !== list) { //status has been changed
+        item.status = list
+        this.updateData(item)
+      }
     },
     async fetchData (){
       //e.preventDefault();
@@ -58,14 +59,17 @@ export default {
           username: "bobby123"
         }
       }).then(response=> {
-        console.log(`before change: ${this.tasks}`)
-        console.log(response.data)
         this.tasks = response.data;
-        console.log(`Right after change: ${this.tasks}`)
       }).catch(error => console.log(error))
       },
-    async updateData() {
-      
+    async updateData(task) {
+      await axios.post('/tasks/update', {
+        _id: task._id,
+        title: task.title,
+        description: task.description,
+        date: task.date,
+        status: task.status,
+      })
     }
   },
   computed: {
