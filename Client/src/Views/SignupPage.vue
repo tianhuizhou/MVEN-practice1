@@ -1,22 +1,22 @@
 <template>
   <div class="loginPage">
-      <h1>Login</h1>
-      <form @submit.prevent="login">
-        <div class = "loginPage-input">
-          <input type="text" required v-model="username"/>
-          <span></span>
-          <label>Username</label>
-        </div>
-        <div class = "loginPage-input">
-          <input type="password" required v-model="password"/>
-          <span></span>
-          <label>Password</label>
-        </div>
-        <button><a>Go!</a></button>
-        <div class="signup_link">
-          Not a member? <a><router-link to="/signup">Sign up</router-link></a>
-        </div>
-      </form>
+    <h1>Sign Up</h1>
+    <form @submit.prevent="signUp">
+      <div class = "loginPage-input">
+        <input type="text" required v-model="username"/>
+        <span></span>
+        <label>Username</label>
+      </div>
+      <div class = "loginPage-input">
+        <input type="password" required v-model="password"/>
+        <span></span>
+        <label>Password</label>
+      </div>
+      <button><a>Sign Up</a></button>
+      <div class="signup_link">
+        Already a member? <a><router-link to="/">Sign In</router-link></a>
+      </div>
+    </form>
 
   </div>
 </template>
@@ -26,32 +26,29 @@ import axios from "@/router/axios.js"
 import router from '../router/index'
 import {useStore} from "vuex"
 export default {
-  name: "LoginPage",
+  name: "SignupPage",
 
   data() {
     return {
       username: "",
       password: "",
-      user: null,
+
       store: useStore(),
     }
   },
-  watch: {
-    user(newVal){
-      if (newVal != null){
-        console.log(this.user)
-        this.store.commit("setupUser", this.user.username)
-        router.push({name:"Home"})
-      }
-    }
-  },
+
   methods: {
-    async login() {
-      await axios.post('/users/login',{
+    async signUp() {
+      await axios.post('/users/',{
         username: this.username,
         password: this.password,
       }).then(response => {
-        this.user = response.data
+        console.log(`After sign up: ${response.status}`)
+        console.log(`the is: ${this.username}`)
+        if(response.status == 201){
+          this.$store.commit("setupUser",this.username)
+          router.push({name:"Home"})
+        }
       }).catch(error => alert(error))
     },
 

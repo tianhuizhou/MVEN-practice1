@@ -15,7 +15,7 @@ router.route('/').post((req, res)=>{
     const title = req.body.title;
     const description = req.body.description;
     const date = req.body.date;
-    const status = "todo";
+    const status = req.body.status;
     const newTask = new Task({
         username, title, description, date, status
     })

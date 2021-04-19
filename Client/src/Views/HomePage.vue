@@ -1,14 +1,14 @@
 <template>
   <div class="home">
-    <TodoList title="Todo" @drop="dropItem($event, '1')" @dragover.prevent @dragenter.prevent>
+    <TodoList title="Todo" list='1' @drop="dropItem($event, '1')" @dragover.prevent @dragenter.prevent>
       <TodoItem v-for="task in getList1" :key="task.id" :item="task" draggable="true" @dragstart="dragItem($event, task)"> </TodoItem>
     </TodoList>
 
-    <TodoList title="In Progress" @drop="dropItem($event, '2')" @dragover.prevent @dragenter.prevent>
+    <TodoList title="In Progress" list='2' @drop="dropItem($event, '2')" @dragover.prevent @dragenter.prevent>
       <TodoItem v-for="task in getList2" :key="task.id" :item="task" draggable="true" @dragstart="dragItem($event, task)"> </TodoItem>
     </TodoList>
 
-    <TodoList title="Done" @drop="dropItem($event, '3')" @dragover.prevent @dragenter.prevent>
+    <TodoList title="Done" list='3' @drop="dropItem($event, '3')" @dragover.prevent @dragenter.prevent>
       <TodoItem v-for="task in getList3" :key="task.id" :item="task" draggable="true" @dragstart="dragItem($event, task)"> </TodoItem>
     </TodoList>
   </div>
@@ -19,7 +19,8 @@
 import TodoList from "@/components/TodoList";
 import TodoItem from "@/components/TodoItem";
 import axios from "@/router/axios.js"
-//import {useStore} from "vuex"
+import router from '../router/index'
+
 export default {
   name: 'HomePage',
   components: {
@@ -88,10 +89,10 @@ export default {
     }
   },
   mounted() {
-    // this.user = this.$route.params.user
     console.log(this.$store.state.user)
     this.user = this.$store.state.user
-    this.fetchData()
+    if(this.user == null) router.push({name:"Login"})
+    else this.fetchData()
   },
 
 }

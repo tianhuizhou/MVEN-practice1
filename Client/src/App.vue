@@ -1,24 +1,24 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">
-        <div class="navigation_logo">
-          Bobbbbbbb
-        </div>
-      </router-link>
-      <div class="navigation_user">
-        @Tianhui Zhou
-      </div>
-    </nav>
+    <Navbar />
     <router-view />
   </div>
 </template>
 
 <script>
-
+import Navbar from "@/components/NavBar"
 export default {
   name: 'App',
-
+  components: {Navbar},
+  data() {
+    return {
+      username: "Welcome"
+    }
+  },
+  mounted() {
+    this.username = this.$store.state.username
+    console.log(`I am from app page: ${this.username}`)
+  }
 }
 </script>
 
@@ -27,7 +27,6 @@ body {
   margin: 0
 }
 #app {
-
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -38,20 +37,5 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 5%;
-    background-color: deepskyblue;
-
-    .navigation_logo {
-      font-weight: bold;
-      font-size: 25px;
-    }
-    .navigation_user {
-      font-weight: bold;
-    }
-  }
 }
 </style>

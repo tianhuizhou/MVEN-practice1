@@ -14,7 +14,6 @@ export default {
   name: "TodoItem",
   props: ['item'],
   setup(){
-
     return {
 
     }
