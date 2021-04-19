@@ -4,10 +4,12 @@
       {{title}}
     </div>
     <slot></slot>
+
   </div>
 </template>
 
 <script>
+
 export default {
   name: "TodoList",
   props: ['title'],
@@ -15,13 +17,14 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .todo-list {
   padding: 10px 20px;
   margin:0 10px;
   border: 1px solid #EEE;
   width: 300px;
-  min-height: 100vh;
+  min-height: 50vh;
+  background-color: #ebecf0;
 }
 .todo-list_title {
   font-weight: bold;

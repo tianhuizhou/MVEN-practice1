@@ -26,10 +26,11 @@ router.route('/').post(async (req, res)=>{
 })
 
 //login
-//if succeed, return the username
+//if succeed, return the user object
 //failed, return Warning.
 router.route('/login').post(async (req, res)=>{
     let user;
+    console.log(`in server: ${req.body.username}`)
     user = User.find({"username": req.body.username})
         .then(user => {
             //res.status(200).json(user)
@@ -43,10 +44,11 @@ router.route('/login').post(async (req, res)=>{
         })
         .catch(err => res.status(400).json('Error: ' +err))
     user.then( async user => {
-        console.log(user._id);
+        //console.log(user._id);
         try {
             if(await bcrypt.compare(req.body.password, user.password)){
                 res.status(200).json(user);
+                console.log("Succeed!");
             } else {
                 res.status(401).send("Password does not match");
             }
